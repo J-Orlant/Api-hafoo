@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function login(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+
         if(Auth::attempt($request->only('email', 'password'))){
             $user = User::where('id', Auth::user()->id)->first();
 
@@ -60,5 +65,26 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Successful logout'
         ], 200);
+    }
+
+    // WEB
+    public function web_postlogin(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|min:8'
+        ]);
+        if(Auth::attempt($request->only('email', 'password'))){
+            if(Auth::user()->role_id == 1){
+                return redirect(route('dashboard'));
+            }else if(Auth::user()->role_id == 2){
+                return redirect(route('login'));
+            }
+        }else{
+            return redirect(route('login'));
+        }
+    }
+    public function web_logout(){
+        Auth::logout();
+        return redirect(route('login'));
     }
 }
