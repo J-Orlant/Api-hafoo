@@ -8,6 +8,7 @@
                 </div>
                 <form action="{{ route('categories.update', $category->id) }}" method="post" enctype="multipart/form-data">
                     @csrf
+                    @method('patch')
                     <div class="card-body">
                         <div class="form-group">
                             <label>Name Category</label>

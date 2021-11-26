@@ -40,7 +40,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            <i class="fas fa-tags"></i>
+                                            <i class="fas fa-ice-cream"></i>
                                         </div>
                                     </div>
                                     <input type="text" name="topping" class="form-control" value="{{old('topping')}}" placeholder="Topping Product">

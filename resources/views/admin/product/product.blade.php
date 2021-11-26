@@ -4,7 +4,7 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <h4><i class="fas fa-bos-open"></i> Products</h4>
+                    <h4><i class="fas fa-box-open"></i> Products</h4>
                     <a href="{{ route('products.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i>
                         Product</a>
                     <form>

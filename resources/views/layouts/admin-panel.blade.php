@@ -37,7 +37,7 @@
                             <div class="d-sm-none d-lg-inline-block">{{Auth::user()->username}}</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="{{ route('get.logout') }}" class="dropdown-item has-icon text-danger">
+                            <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">
                                 <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </div>
@@ -68,7 +68,7 @@
                         </li>
                         <li class="menu-header">Logout</li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i><span>Log out</span></a>
+                            <a href="{{ route('logout') }}" class="nav-link text-danger"><i class="fas fa-sign-out-alt"></i><span>Log out</span></a>
                         </li>
                     </ul>
                 </aside>

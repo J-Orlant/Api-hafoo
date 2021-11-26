@@ -8,6 +8,8 @@
             </div>
             <form action="{{ route('products.update', $product->slug) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('patch')
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card-body">
@@ -40,7 +42,7 @@
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
-                                            <i class="fas fa-tags"></i>
+                                            <i class="fas fa-ice-cream"></i>
                                         </div>
                                     </div>
                                     <input type="text" name="topping" class="form-control" value="{{$product->topping}}" placeholder="Topping Product">
