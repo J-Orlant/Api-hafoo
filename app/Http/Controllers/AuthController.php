@@ -9,16 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:8'
         ]);
 
-        if(Auth::attempt($request->only('email', 'password'))){
+        if (Auth::attempt($request->only('email', 'password'))) {
             $user = User::where('id', Auth::user()->id)->first();
 
-            if(Auth::user()->role_id == 1){
+            if (Auth::user()->role_id == 1) {
                 $token = $user->createToken("TokenAdmin")->plainTextToken;
 
                 return response()->json([
@@ -26,7 +27,7 @@ class AuthController extends Controller
                     'user' => $user,
                     'token' => $token
                 ], 200);
-            }else if(Auth::user()->role_id == 2){
+            } else if (Auth::user()->role_id == 2) {
                 $token = $user->createToken("TokenUser")->plainTextToken;
 
                 return response()->json([
@@ -35,13 +36,14 @@ class AuthController extends Controller
                     'token' => $token
                 ], 200);
             }
-        }else{
+        } else {
             return response()->json([
                 'message' => 'Username or Password is wrong'
             ], 400);
         }
     }
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         $request->validate([
             "name" => "required",
             "username" => "required",
@@ -55,12 +57,20 @@ class AuthController extends Controller
             'password' => bcrypt($request->password),
             'role_id' => 2
         ]);
-        return response()->json([ 
-            'message' => 'Successful registration',
-            'data_student' => $user,
-        ], 200);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = User::where('id', Auth::user()->id)->first();
+
+            $token = $user->createToken("TokenUser")->plainTextToken;
+
+            return response()->json([
+                'message' => 'Successful login as a user',
+                'user' => $user,
+                'token' => $token
+            ], 200);
+        }
     }
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'message' => 'Successful logout'
@@ -68,22 +78,24 @@ class AuthController extends Controller
     }
 
     // WEB
-    public function web_postlogin(Request $request){
+    public function web_postlogin(Request $request)
+    {
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required|min:8'
         ]);
-        if(Auth::attempt($request->only('email', 'password'))){
-            if(Auth::user()->role_id == 1){
+        if (Auth::attempt($request->only('email', 'password'))) {
+            if (Auth::user()->role_id == 1) {
                 return redirect(route('dashboard'));
-            }else if(Auth::user()->role_id == 2){
+            } else if (Auth::user()->role_id == 2) {
                 return redirect(route('login'));
             }
-        }else{
+        } else {
             return redirect(route('login'));
         }
     }
-    public function web_logout(){
+    public function web_logout()
+    {
         Auth::logout();
         return redirect(route('login'));
     }
