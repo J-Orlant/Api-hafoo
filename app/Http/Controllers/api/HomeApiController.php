@@ -17,6 +17,7 @@ class HomeApiController extends Controller
         $user = User::where('id', Auth::user()->id)->first();
 
         return response()->json([
+            'code' => 200,
             'message' => 'Get data successfuly',
             'products' => $products,
             'categories' => $categories,
